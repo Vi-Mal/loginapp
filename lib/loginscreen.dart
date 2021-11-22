@@ -1,10 +1,8 @@
 import 'dart:async';
-
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-
 import 'myhomepage.dart';
-//
+
 // void main() {
 //   runApp(const MyApp2());
 // }
@@ -14,7 +12,7 @@ import 'myhomepage.dart';
 //
 //   @override
 //   Widget build(BuildContext context) {
-//     return const MaterialApp(
+//     return MaterialApp(
 //       debugShowCheckedModeBanner: false,
 //       home: LoginScreen(),
 //     );
@@ -22,70 +20,93 @@ import 'myhomepage.dart';
 // }
 
 class LoginScreen extends StatefulWidget {
-  const LoginScreen({Key? key}) : super(key: key);
-
   @override
-  State<LoginScreen> createState() => _LoginScreen();
+  _LoginScreen createState() => _LoginScreen();
 }
 
 class _LoginScreen extends State<LoginScreen> {
-  var cont = TextEditingController();
-  String main_string = "E-mail";
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: SafeArea(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.start,
-          children: [
-            Image.asset('Assets/img.png'),
+      resizeToAvoidBottomInset: false,
+        body: Stack(
+          children: <Widget>[
             Padding(
-              padding: EdgeInsets.all(10),
-              child: TextFormField(
-                controller: cont,
-                decoration: InputDecoration(
-                  hintText: main_string,
-                  fillColor: Colors.white,
-                  border: OutlineInputBorder(
-                    borderRadius: BorderRadius.circular(30.0),
+              padding: EdgeInsets.fromLTRB(0, 25, 0, 0),
+              child: Container(
+                decoration: BoxDecoration(
+                  image: DecorationImage(
+                    image: AssetImage("Assets/img.png"),
+                    colorFilter: ColorFilter.mode(Colors.grey.withOpacity(.3), BlendMode.dstATop),
+                    fit: BoxFit.cover,
                   ),
                 ),
               ),
             ),
-            Padding(
-              padding: EdgeInsets.all(10),
-              child: TextFormField(
-                controller: cont,
-                decoration: InputDecoration(
-                  hintText: "password",
-                  fillColor: Colors.white,
-                  border: OutlineInputBorder(
-                    borderRadius: BorderRadius.circular(30.0),
-                  ),
-                ),
-              ),
+            Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                const SizedBox(height: 90.0),
+                    const Center(
+                      child: Text('FuturaInsTech',
+                        style: TextStyle(
+                          fontSize: 26,
+                          fontWeight: FontWeight.bold,),
+                      ),
+                    ),
+                const SizedBox(height: 200.0),
+                Container(
+                    padding: const EdgeInsets.only(top: 50.0, left: 20.0, right: 20.0),
+                    child: Column(
+                      children: <Widget>[
+                        TextFormField(
+                          decoration: InputDecoration(
+                            fillColor:Colors.white,
+                            filled: true,
+                            focusColor: Colors.red,
+                            hintText: "E-mail",
+                            border: OutlineInputBorder(
+                              borderRadius: BorderRadius.circular(30.0),
+                            ),
+                          ),
+                        ),
+                        const SizedBox(height: 20.0),
+                        TextFormField(
+                          decoration: InputDecoration(
+                            fillColor:Colors.white,
+                            filled: true,
+                            hintText: "Password",
+                            border: OutlineInputBorder(
+                              borderRadius: BorderRadius.circular(30.0),
+                            ),
+                          ),
+                        ),
+                        const SizedBox(height: 50.0),
+                        SizedBox(
+                          height: 40.0,
+                          width: 150,
+                          child: ElevatedButton(
+                            style: ElevatedButton.styleFrom(
+                              primary: Color.alphaBlend(Colors.cyan, Colors.black),
+                              shape: RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(10),
+                              ),
+                            ),
+                            child: const Text("Login"),
+                            onPressed: (){
+                              Navigator.push(
+                                context,
+                                MaterialPageRoute(builder: (context) => otp()),
+                              );
+                            },
+                          ),
+                        ),
+                      ],
+                    )),
+              ],
             ),
-            Padding(
-              padding: EdgeInsets.all(10),
-              child: ElevatedButton(
-                  style: ElevatedButton.styleFrom(
-                    primary: Color(0xff403B4A),
-                    shape: const CircleBorder(),
-                    padding: const EdgeInsets.all(24),
-                  ),
-                  child: Text("next"),
-                  onPressed: () {
-                    Timer(
-                        const Duration(seconds: 0),
-                        () => Navigator.of(context).pushReplacement(
-                            MaterialPageRoute(
-                                builder: (BuildContext context) => otp())));
-                  }),
-            )
           ],
-        ),
-      ),
+        )
     );
   }
 }
@@ -101,42 +122,71 @@ class _otpState extends State<otp> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Column(
-        mainAxisAlignment: MainAxisAlignment.start,
-        children: [
-          Image.asset('Assets/img.png'),
-          Padding(
-            padding: EdgeInsets.all(10),
-            child: TextFormField(
-              decoration: InputDecoration(
-                hintText: "otp",
-                fillColor: Colors.white,
-                border: OutlineInputBorder(
-                  borderRadius: BorderRadius.circular(30.0),
+            resizeToAvoidBottomInset: false,
+            body: Stack(
+              children: <Widget>[
+                Padding(
+                  padding: const EdgeInsets.fromLTRB(0, 25, 0, 0),
+                  child: Container(
+                    decoration: BoxDecoration(
+                      image: DecorationImage(
+                        image: const AssetImage("Assets/img.png"),
+                        colorFilter: ColorFilter.mode(Colors.grey.withOpacity(.3), BlendMode.dstATop),
+                        fit: BoxFit.cover,
+                      ),
+                    ),
+                  ),
                 ),
-              ),
-            ),
-          ),
-          Padding(
-            padding: EdgeInsets.all(10),
-            child: ElevatedButton(
-                child: Text("next"),
-                style: ElevatedButton.styleFrom(
-                  primary: Color(0xff403B4A),
-                  shape: const CircleBorder(),
-                  padding: const EdgeInsets.all(24),
+                Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    const SizedBox(height: 90.0),
+                    const Center(
+                      child: Text('FuturaInsTech',
+                        style: TextStyle(
+                          fontSize: 26,
+                          fontWeight: FontWeight.bold,),
+                      ),
+                    ),
+                    const SizedBox(height: 200.0),
+                    Container(
+                        padding: const EdgeInsets.only(top: 50.0, left: 20.0, right: 20.0),
+                        child: Column(
+                          children: <Widget>[
+                            TextFormField(
+                              decoration: InputDecoration(
+                                fillColor:Colors.white,
+                                filled: true,
+                                hintText: "OTP",
+                                border: OutlineInputBorder(
+                                  borderRadius: BorderRadius.circular(30.0),
+                                ),
+                              ),
+                            ),
+                            const SizedBox(height: 50.0),
+                            SizedBox(
+                              height: 40.0,
+                              width: 150,
+                              child: ElevatedButton(
+                                style: ElevatedButton.styleFrom(
+                                  primary: Color.alphaBlend(Colors.cyan, Colors.black),
+                                  shape: RoundedRectangleBorder(
+                                    borderRadius: BorderRadius.circular(10),
+                                  ),
+                                ),
+                                child: const Text("verify"),
+                                onPressed: (){
+                                  Navigator.of(context).pushReplacement(MaterialPageRoute(
+                                      builder: (BuildContext context) => MyHomePage()));
+                                },
+                              ),
+                            ),
+                          ],
+                        )),
+                  ],
                 ),
-                onPressed: () {
-                  Timer(
-                      const Duration(seconds: 0),
-                      () => Navigator.of(context).pushReplacement(
-                          MaterialPageRoute(
-                              builder: (BuildContext context) =>
-                                  MyHomePage())));
-                }),
-          )
-        ],
-      ),
+              ],
+            )
     );
   }
 }
