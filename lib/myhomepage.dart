@@ -2,6 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:footer/footer.dart';
 import 'package:footer/footer_view.dart';
+import 'package:loginapp/namelist.dart';
 import 'customappbar.dart';
 import 'customdrawer.dart';
 
@@ -20,7 +21,7 @@ class _MyHomePageState extends State<MyHomePage> {
         appBar: CustomBarWidget(),
         drawer: CustomDrawer(),
         body: FooterView(
-          children: const [],
+          children: [],
           footer: Footer(
             backgroundColor: const Color(0xff5bacecff),
             child: Padding(
@@ -45,7 +46,7 @@ class _MyHomePageState extends State<MyHomePage> {
             child: FloatingActionButton(
               backgroundColor: Color(0xff403B4A),
               child: Icon(
-                Icons.favorite,
+                Icons.add,
               ),
               elevation: 10,
               onPressed: null,

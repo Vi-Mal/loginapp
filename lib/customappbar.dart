@@ -7,11 +7,10 @@ class CustomBarWidget extends StatelessWidget implements PreferredSizeWidget{
   Widget build(BuildContext context) {
     return Scaffold(
       body: Container(
-        height: 160.0,
         child: Stack(
           children: <Widget>[
             Padding(
-              padding: const EdgeInsets.fromLTRB(0, 30  , 0, 0),
+              padding: const EdgeInsets.fromLTRB(0, 0  , 0, 0),
               child: Container(
                 padding: EdgeInsets.symmetric(horizontal: 20.0),
                 child: DecoratedBox(
@@ -23,7 +22,7 @@ class CustomBarWidget extends StatelessWidget implements PreferredSizeWidget{
                       IconButton(
                         icon: const Icon(
                           Icons.menu,
-                          color: Color.fromRGBO(50, 75, 205, 1),
+                          color: Color(0xff0ED2F7),
                         ),
                         onPressed:(){
                           Scaffold.of(context).openDrawer();
@@ -40,7 +39,7 @@ class CustomBarWidget extends StatelessWidget implements PreferredSizeWidget{
                       IconButton(
                         icon: const Icon(
                           Icons.search,
-                          color: Color.fromRGBO(50, 75, 205, 1),
+                          color: Color(0xff0ED2F7),
                         ),
                         onPressed: () {
                           print("your menu action here");
@@ -58,6 +57,6 @@ class CustomBarWidget extends StatelessWidget implements PreferredSizeWidget{
   }
 
   @override
-  Size get preferredSize => const Size.fromHeight(100);
+  Size get preferredSize => const Size.fromHeight(47);
 }
 

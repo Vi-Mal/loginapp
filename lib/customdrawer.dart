@@ -1,18 +1,19 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:loginapp/namelist.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 import 'loginscreen.dart';
 
 class CustomDrawer extends StatelessWidget {
   final name = "username";
   final padding = const EdgeInsets.symmetric(horizontal: 20);
-
   const CustomDrawer({Key? key}) : super(key: key);
   @override
   Widget build(BuildContext context) {
     return Drawer(
       child: Material(
-        color: Colors.lightBlueAccent,
+        color: Color(0xff0ED2F7),
         child: ListView(
           children: <Widget>[
             buildHeader(
@@ -25,9 +26,17 @@ class CustomDrawer extends StatelessWidget {
               child: Column(
                 children: [
                   buildMenuItem(
-                    text: 'People',
+                    text: 'employees',
                     icon: Icons.people,
-                    onClicked: () => selectedItem(context, 0),
+                    onClicked: () {
+                        selectedItem(context, 0);
+                        Navigator.push<void>(
+                          context,
+                          MaterialPageRoute<void>(
+                            builder: (BuildContext context) => const AddToList(),
+                          ),
+                        );
+                    },
                   ),
                   const SizedBox(height: 16),
                   buildMenuItem(
@@ -43,9 +52,11 @@ class CustomDrawer extends StatelessWidget {
                         buildMenuItem(
                           text: 'Logout',
                           icon: Icons.logout,
-                          onClicked: () {
+                          onClicked: () async {
+                            SharedPreferences prefs = await SharedPreferences.getInstance();
+                            prefs.clear();
                             Navigator.of(context).pushReplacement(MaterialPageRoute(
-                                builder: (BuildContext context) => LoginScreen()));
+                                builder: (BuildContext context) => LoginPage()));
                           },
                         ),
                       ],
@@ -68,7 +79,7 @@ class CustomDrawer extends StatelessWidget {
       InkWell(
         onTap: onClicked,
         child: Container(
-          color: Colors.lightBlue,
+          color: Color(0xffB2FEFA),
           padding: padding.add(EdgeInsets.symmetric(vertical: 40)),
           child: Row(
             children: [

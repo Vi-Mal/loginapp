@@ -36,7 +36,8 @@ dependencies:
   cupertino_icons: ^1.0.2
   footer:
   material_floating_search_bar: ^0.3.6
-  flutter_svg: any
+  fluttertoast: ^8.0.8
+  shared_preferences:
 
 dev_dependencies:
   flutter_test:

@@ -1,192 +1,334 @@
-import 'dart:async';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
+import 'package:fluttertoast/fluttertoast.dart';
+import 'package:shared_preferences/shared_preferences.dart';
+
 import 'myhomepage.dart';
 
-// void main() {
-//   runApp(const MyApp2());
-// }
-//
-// class MyApp2 extends StatelessWidget {
-//   const MyApp2({Key? key}) : super(key: key);
-//
-//   @override
-//   Widget build(BuildContext context) {
-//     return MaterialApp(
-//       debugShowCheckedModeBanner: false,
-//       home: LoginScreen(),
-//     );
-//   }
-// }
+class loginotp extends StatefulWidget{
 
-class LoginScreen extends StatefulWidget {
   @override
-  _LoginScreen createState() => _LoginScreen();
+  _loginotp createState() => _loginotp();
+
 }
 
-class _LoginScreen extends State<LoginScreen> {
+class _loginotp extends State<loginotp>{
+  var otpctl = TextEditingController();
+
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      resizeToAvoidBottomInset: false,
-        body: Stack(
-          children: <Widget>[
-            Padding(
-              padding: EdgeInsets.fromLTRB(0, 25, 0, 0),
-              child: Container(
+    return Container(
+      child: Column(
+        children: <Widget>[
+          TextField(
+            controller: otpctl,
+            decoration: InputDecoration(
+              labelText: "OTP",
+              labelStyle:
+              TextStyle(fontSize: 14, color: Colors.grey.shade400),
+              enabledBorder: OutlineInputBorder(
+                borderRadius: BorderRadius.circular(10),
+                borderSide: BorderSide(
+                  color: Colors.grey.shade300,
+                ),
+              ),
+              focusedBorder: OutlineInputBorder(
+                  borderRadius: BorderRadius.circular(10),
+                  borderSide: const BorderSide(
+                    color: Colors.red,
+                  )),
+            ),
+            keyboardType: TextInputType.number,
+            inputFormatters: <TextInputFormatter>[
+              FilteringTextInputFormatter.digitsOnly
+            ],
+          ),
+          const SizedBox(
+            height: 12,
+          ),
+          const Align(
+            alignment: Alignment.topRight,
+            child: Text(
+              "Resend Otp",
+              style:
+              TextStyle(fontSize: 14, fontWeight: FontWeight.w600),
+            ),
+          ),
+          const SizedBox(
+            height: 30,
+          ),
+          Container(
+            height: 50,
+            width: double.infinity,
+            child: TextButton(
+              onPressed: () {
+                if (otpctl.text == "1234") {
+                  setState(() async {
+                    SharedPreferences prefs = await SharedPreferences.getInstance();
+                    prefs.setBool("isLoggedIn", true);
+                    Navigator.of(context).pushAndRemoveUntil(
+                        MaterialPageRoute(
+                            builder: (context) => MyHomePage()),
+                            (Route<dynamic> route) => false);
+                  });
+                } else {
+                  Fluttertoast.showToast(
+                    msg: "incorrect otp",
+                    toastLength: Toast.LENGTH_SHORT,
+                    gravity: ToastGravity.CENTER,
+                  );
+                }
+              },
+              child: Ink(
                 decoration: BoxDecoration(
-                  image: DecorationImage(
-                    image: AssetImage("Assets/img.png"),
-                    colorFilter: ColorFilter.mode(Colors.grey.withOpacity(.3), BlendMode.dstATop),
-                    fit: BoxFit.cover,
+                  borderRadius: BorderRadius.circular(6),
+                  gradient: const LinearGradient(
+                    begin: Alignment.centerLeft,
+                    end: Alignment.centerRight,
+                    colors: [
+                      Color(0xffB2FEFA),
+                      Color(0xff0ED2F7),
+                      Color(0xffB2FEFA),
+                    ],
+                  ),
+                ),
+                child: Container(
+                  alignment: Alignment.center,
+                  constraints: const BoxConstraints(
+                      maxWidth: double.infinity, minHeight: 50),
+                  child: const Text(
+                    "verify",
+                    style: TextStyle(
+                        color: Colors.white,
+                        fontWeight: FontWeight.bold),
+                    textAlign: TextAlign.center,
                   ),
                 ),
               ),
             ),
-            Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                const SizedBox(height: 90.0),
-                    const Center(
-                      child: Text('FuturaInsTech',
-                        style: TextStyle(
-                          fontSize: 26,
-                          fontWeight: FontWeight.bold,),
-                      ),
-                    ),
-                const SizedBox(height: 200.0),
-                Container(
-                    padding: const EdgeInsets.only(top: 50.0, left: 20.0, right: 20.0),
-                    child: Column(
-                      children: <Widget>[
-                        TextFormField(
-                          decoration: InputDecoration(
-                            fillColor:Colors.white,
-                            filled: true,
-                            focusColor: Colors.red,
-                            hintText: "E-mail",
-                            border: OutlineInputBorder(
-                              borderRadius: BorderRadius.circular(30.0),
-                            ),
-                          ),
-                        ),
-                        const SizedBox(height: 20.0),
-                        TextFormField(
-                          decoration: InputDecoration(
-                            fillColor:Colors.white,
-                            filled: true,
-                            hintText: "Password",
-                            border: OutlineInputBorder(
-                              borderRadius: BorderRadius.circular(30.0),
-                            ),
-                          ),
-                        ),
-                        const SizedBox(height: 50.0),
-                        SizedBox(
-                          height: 40.0,
-                          width: 150,
-                          child: ElevatedButton(
-                            style: ElevatedButton.styleFrom(
-                              primary: Color.alphaBlend(Colors.cyan, Colors.black),
-                              shape: RoundedRectangleBorder(
-                                borderRadius: BorderRadius.circular(10),
-                              ),
-                            ),
-                            child: const Text("Login"),
-                            onPressed: (){
-                              Navigator.push(
-                                context,
-                                MaterialPageRoute(builder: (context) => otp()),
-                              );
-                            },
-                          ),
-                        ),
-                      ],
-                    )),
-              ],
+          ),
+          const SizedBox(
+            height: 30,
+          ),
+        ],
+      ),
+    );
+  }
+
+}
+
+
+
+
+class loginmailid extends StatefulWidget{
+
+  @override
+  _loginmailid createState() => _loginmailid();
+
+}
+
+class _loginmailid extends State<loginmailid>{
+  bool _isObscure = true;
+  var cmail = "rainavimal454@gmail.com";
+  var password = "test1234";
+  var mailid = TextEditingController();
+  var passwrd = TextEditingController();
+  var loginmailidCheck = false;
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(child: Column(
+      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: <Widget>[
+        Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: <Widget>[
+            SizedBox(
+              height: 50,
+            ),
+            Text(
+              "Welcome,",
+              style: TextStyle(fontSize: 26, fontWeight: FontWeight.bold),
+            ),
+            SizedBox(
+              height: 6,
+            ),
+            Text(
+              "to FuturaInstTech,",
+              style: TextStyle(fontSize: 26, fontWeight: FontWeight.bold),
+            ),
+            SizedBox(
+              height: 6,
+            ),
+            Text(
+              "Sign in to continue!",
+              style: TextStyle(fontSize: 20, color: Colors.grey.shade400),
             ),
           ],
-        )
+        ),
+        Column(
+          children: <Widget>[
+            TextField(
+              textInputAction: TextInputAction.next,
+              controller: mailid,
+              decoration: InputDecoration(
+                labelText: "Email ID",
+                labelStyle:
+                TextStyle(fontSize: 14, color: Colors.grey.shade400),
+                enabledBorder: OutlineInputBorder(
+                  borderRadius: BorderRadius.circular(10),
+                  borderSide: BorderSide(
+                    color: Colors.grey.shade300,
+                  ),
+                ),
+                focusedBorder: OutlineInputBorder(
+                    borderRadius: BorderRadius.circular(10),
+                    borderSide: BorderSide(
+                      color: Colors.red,
+                    )),
+              ),
+            ),
+            SizedBox(
+              height: 16,
+            ),
+            TextField(
+              textInputAction: TextInputAction.done,
+              obscureText: _isObscure,
+              controller: passwrd,
+              decoration: InputDecoration(
+                labelText: "Password",
+                labelStyle:
+                TextStyle(fontSize: 14, color: Colors.grey.shade400),
+                enabledBorder: OutlineInputBorder(
+                  borderRadius: BorderRadius.circular(10),
+                  borderSide: BorderSide(
+                    color: Colors.grey.shade300,
+                  ),
+                ),
+                focusedBorder: OutlineInputBorder(
+                    borderRadius: BorderRadius.circular(10),
+                    borderSide: BorderSide(
+                      color: Colors.red,
+                    )),
+                suffixIcon: IconButton(
+                    icon: Icon(_isObscure
+                        ? Icons.visibility
+                        : Icons.visibility_off),
+                    onPressed: () {
+                      setState(() {
+                        _isObscure = !_isObscure;
+                      });
+                    }),
+              ),
+            ),
+            const SizedBox(
+              height: 12,
+            ),
+            const Align(
+              alignment: Alignment.topRight,
+              child: Text(
+                "Forgot Password ?",
+                style:
+                TextStyle(fontSize: 14, fontWeight: FontWeight.w600),
+              ),
+            ),
+            const SizedBox(
+              height: 30,
+            ),
+            SizedBox(
+              height: 50,
+              width: double.infinity,
+              child: TextButton(
+                onPressed: () {
+                  String a = mailid.text;
+                  print(cmail);
+                  if (a == cmail && passwrd.text == password) {
+                    setState(() {
+                      Navigator.push<void>(
+                        context,
+                        MaterialPageRoute<void>(
+                          builder: (BuildContext context) =>  loginotp(),
+                        ),
+                      );
+                    });
+                  } else {
+                    Fluttertoast.showToast(
+                      msg: "incorrect username/password",
+                      toastLength: Toast.LENGTH_SHORT,
+                      gravity: ToastGravity.CENTER,
+                    );
+                  }
+                },
+                child: Ink(
+                  decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(6),
+                    gradient: const LinearGradient(
+                      begin: Alignment.centerLeft,
+                      end: Alignment.centerRight,
+                      colors: [
+                        Color(0xffB2FEFA),
+                        Color(0xff0ED2F7),
+                        Color(0xffB2FEFA),
+                      ],
+                    ),
+                  ),
+                  child: Container(
+                    alignment: Alignment.center,
+                    constraints: const BoxConstraints(
+                        maxWidth: double.infinity, minHeight: 50),
+                    child: const Text(
+                      "Login",
+                      style: TextStyle(
+                          color: Colors.white,
+                          fontWeight: FontWeight.bold),
+                      textAlign: TextAlign.center,
+                    ),
+                  ),
+                ),
+                // child: RoundedRectangleBorder(
+                //   borderRadius: BorderRadius.circular(6),
+                // ),
+              ),
+            ),
+            SizedBox(
+              height: 30,
+            ),
+          ],
+        ),
+      ],
+    ),
     );
   }
 }
 
-class otp extends StatefulWidget {
-  const otp({Key? key}) : super(key: key);
-
-  @override
-  _otpState createState() => _otpState();
+Widget loginScreen(){
+  return loginmailid();
 }
 
-class _otpState extends State<otp> {
+
+class LoginPage extends StatefulWidget {
+  const LoginPage({Key? key}) : super(key: key);
+
+  @override
+  _LoginPage createState() => _LoginPage();
+}
+
+class _LoginPage extends State<LoginPage> {
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-            resizeToAvoidBottomInset: false,
-            body: Stack(
-              children: <Widget>[
-                Padding(
-                  padding: const EdgeInsets.fromLTRB(0, 25, 0, 0),
-                  child: Container(
-                    decoration: BoxDecoration(
-                      image: DecorationImage(
-                        image: const AssetImage("Assets/img.png"),
-                        colorFilter: ColorFilter.mode(Colors.grey.withOpacity(.3), BlendMode.dstATop),
-                        fit: BoxFit.cover,
-                      ),
-                    ),
-                  ),
-                ),
-                Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    const SizedBox(height: 90.0),
-                    const Center(
-                      child: Text('FuturaInsTech',
-                        style: TextStyle(
-                          fontSize: 26,
-                          fontWeight: FontWeight.bold,),
-                      ),
-                    ),
-                    const SizedBox(height: 200.0),
-                    Container(
-                        padding: const EdgeInsets.only(top: 50.0, left: 20.0, right: 20.0),
-                        child: Column(
-                          children: <Widget>[
-                            TextFormField(
-                              decoration: InputDecoration(
-                                fillColor:Colors.white,
-                                filled: true,
-                                hintText: "OTP",
-                                border: OutlineInputBorder(
-                                  borderRadius: BorderRadius.circular(30.0),
-                                ),
-                              ),
-                            ),
-                            const SizedBox(height: 50.0),
-                            SizedBox(
-                              height: 40.0,
-                              width: 150,
-                              child: ElevatedButton(
-                                style: ElevatedButton.styleFrom(
-                                  primary: Color.alphaBlend(Colors.cyan, Colors.black),
-                                  shape: RoundedRectangleBorder(
-                                    borderRadius: BorderRadius.circular(10),
-                                  ),
-                                ),
-                                child: const Text("verify"),
-                                onPressed: (){
-                                  Navigator.of(context).pushReplacement(MaterialPageRoute(
-                                      builder: (BuildContext context) => MyHomePage()));
-                                },
-                              ),
-                            ),
-                          ],
-                        )),
-                  ],
-                ),
-              ],
-            )
+      backgroundColor: Colors.white,
+      body: SafeArea(
+        child: Container(
+          padding: EdgeInsets.only(left: 16, right: 16),
+          child:Container(
+            child:loginScreen()
+          ),
+          ),
+      ),
     );
   }
 }
