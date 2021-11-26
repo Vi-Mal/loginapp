@@ -10,7 +10,7 @@ class CustomBarWidget extends StatelessWidget implements PreferredSizeWidget{
         child: Stack(
           children: <Widget>[
             Padding(
-              padding: const EdgeInsets.fromLTRB(0, 0  , 0, 0),
+              padding: const EdgeInsets.fromLTRB(0, 15, 0, 0),
               child: Container(
                 padding: EdgeInsets.symmetric(horizontal: 20.0),
                 child: DecoratedBox(
@@ -57,6 +57,6 @@ class CustomBarWidget extends StatelessWidget implements PreferredSizeWidget{
   }
 
   @override
-  Size get preferredSize => const Size.fromHeight(47);
+  Size get preferredSize => const Size.fromHeight(80);
 }
 

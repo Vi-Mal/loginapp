@@ -1,3 +1,4 @@
+import 'package:email_validator/email_validator.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -18,7 +19,7 @@ class _LoginPage extends State<LoginPage> {
   var _otpvisible = true;
   bool _isObscure = true;
   var cmail = "rainavimal454@gmail.com";
-  var password = "test1234";
+  var password = "Test#1234";
   var mailid = TextEditingController();
   var passwrd = TextEditingController();
   var loginmailidCheck = false;
@@ -29,9 +30,16 @@ class _LoginPage extends State<LoginPage> {
     });
   }
 
+  bool validatePassword(String value){
+    String  pattern = r'^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[!@#\$&*~]).{8,}$';
+    RegExp regExp = new RegExp(pattern);
+    return regExp.hasMatch(value);
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      resizeToAvoidBottomInset: false,
       backgroundColor: Colors.white,
       body: SafeArea(
         child: Container(
@@ -40,23 +48,23 @@ class _LoginPage extends State<LoginPage> {
             children: [
               Column(
               children: <Widget>[
-                SizedBox(
+                const SizedBox(
                   height: 50,
                 ),
-                Text(
+                const Text(
                   "Welcome,",
                   style: TextStyle(
                       fontSize: 26, fontWeight: FontWeight.bold),
                 ),
-                SizedBox(
+                const SizedBox(
                   height: 6,
                 ),
-                Text(
+                const Text(
                   "to FuturaInstTech,",
                   style: TextStyle(
                       fontSize: 26, fontWeight: FontWeight.bold),
                 ),
-                SizedBox(
+                const SizedBox(
                   height: 6,
                 ),
                 Text(
@@ -66,7 +74,7 @@ class _LoginPage extends State<LoginPage> {
                 ),
               ],
             ),
-              SizedBox(height: 180),
+              const SizedBox(height: 180),
               if(_otpvisible == false)
                 Container(
                 child: Column(
@@ -245,9 +253,7 @@ class _LoginPage extends State<LoginPage> {
                             width: double.infinity,
                             child: TextButton(
                               onPressed: () {
-                                String a = mailid.text;
-                                print(cmail);
-                                if (a == cmail && passwrd.text == password) {
+                                if (EmailValidator.validate(mailid.text) && validatePassword(passwrd.text)) {
                                   setState(() {
                                     _otpvisible = false;
                                   });
@@ -290,7 +296,7 @@ class _LoginPage extends State<LoginPage> {
                               // ),
                             ),
                           ),
-                          SizedBox(
+                          const SizedBox(
                             height: 30,
                           ),
                         ],

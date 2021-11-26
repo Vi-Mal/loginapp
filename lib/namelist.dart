@@ -21,8 +21,7 @@ class _AddToListState extends State<AddToList> {
 
   void  addemp(name, id) {
     setState(() {
-      Data.list.add(CustomCard(name: name,id: id));
-      print(Data.list.runtimeType);
+      Data.list.add(CustomCard(name: name,realname: id));
     });
   }
 
@@ -57,30 +56,30 @@ class _AddToListState extends State<AddToList> {
 
   @override
   Widget build(BuildContext context) {
-    return SafeArea(
-      child: Scaffold(
-        appBar: CustomBarWidget(),
-        drawer: CustomDrawer(),
-         body:
-         SingleChildScrollView(
-           child: InkWell(
-            child: Column(
-                mainAxisAlignment: MainAxisAlignment.start,
-                children: Data.list,
-            ),
-        ),
-         ),
-        floatingActionButton: Align(
-            child: FloatingActionButton(
-              backgroundColor: const Color(0xff403B4A),
-              child: const Icon(
-                Icons.add,
-              ),
-              elevation: 10,
-              onPressed: _showMyDialog,
-            ),
-            alignment: const Alignment(1, 1)),
+    return Scaffold(
+      appBar: AppBar(
+        title: const Text('employees'),
+        centerTitle: true,
+        backgroundColor: const Color(0xff0ED2F7),
       ),
+      body: SingleChildScrollView(
+        child: InkWell(
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.start,
+            children: Data.list,
+          ),
+        ),
+      ),
+      floatingActionButton: Align(
+          child: FloatingActionButton(
+            backgroundColor: const Color(0xff403B4A),
+            child: const Icon(
+              Icons.add,
+            ),
+            elevation: 10,
+            onPressed: _showMyDialog,
+          ),
+          alignment: const Alignment(1, 1)),
     );
   }
 }

@@ -2,7 +2,6 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:footer/footer.dart';
 import 'package:footer/footer_view.dart';
-import 'package:loginapp/namelist.dart';
 import 'customappbar.dart';
 import 'customdrawer.dart';
 
@@ -42,17 +41,6 @@ class _MyHomePageState extends State<MyHomePage> {
           ),
           flex: 1,
         ),
-        floatingActionButton: const Align(
-            child: FloatingActionButton(
-              backgroundColor: Color(0xff403B4A),
-              child: Icon(
-                Icons.add,
-              ),
-              elevation: 10,
-              onPressed: null,
-            ),
-            alignment: Alignment(1, .9)),
-
       )
     );
   }
