@@ -1,59 +1,112 @@
 import 'dart:convert';
 
-import 'package:flutter/material.dart';
-import 'package:http/http.dart' as http;
+import 'package:http/http.dart' as http;import 'package:flutter/material.dart';
 
-import 'customcardlist.dart';
+import 'empinfo.dart';
 
-class empApiData extends StatefulWidget {
-  const empApiData({Key? key}) : super(key: key);
-
+class avengersApi extends StatefulWidget {
   @override
-  _empApiDataState createState() => _empApiDataState();
+  _avengersApiState createState() => _avengersApiState();
 }
 
-class _empApiDataState extends State<empApiData> {
+class _avengersApiState extends State<avengersApi> {
+  List avengerapidata = [];
+  List name_avenger = [];
+  bool isSearching = false;
 
-  Future getApiData() async {
+  getAvengers() async {
     var response = await http.get(Uri.https('simplifiedcoding.net', 'demos/marvel'));
-    var jsonData = jsonDecode(response.body);
+    return jsonDecode(response.body);
+  }
 
-    for (var u in jsonData){
-      // users.add(CustomCard(name:u["name"],realname:u["id"]));
-      var user = CustomCard(name:u["name"],realname:u["realname"]);
-      ApiData.list.add(user);
-    }
+  @override
+  void initState() {
+    getAvengers().then((data) {
+      setState(() {
+        avengerapidata = name_avenger = data;
+      });
+    });
+    super.initState();
+  }
+
+  void _filterAvengername(value) {
+    setState(() {
+      name_avenger = avengerapidata
+          .where((country) =>
+          country['name'].toLowerCase().contains(value.toLowerCase()))
+          .toList();
+    });
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('employee'),
-        centerTitle: true,
-        backgroundColor: Colors.green,
+        backgroundColor: Color(0xff0ED2F7),
+        title: !isSearching
+            ? Text('avengers')
+            : TextField(
+          onChanged: (value) {
+            _filterAvengername(value);
+          },
+          style: TextStyle(color: Colors.white),
+          decoration: InputDecoration(
+              icon: Icon(
+                Icons.search,
+                color: Colors.white,
+              ),
+              hintText: "Search hero here",
+              hintStyle: TextStyle(color: Colors.white)),
+        ),
+        actions: <Widget>[
+          isSearching
+              ? IconButton(
+            icon: Icon(Icons.cancel),
+            onPressed: () {
+              setState(() {
+                this.isSearching = false;
+                name_avenger = avengerapidata;
+              });
+            },
+          )
+              : IconButton(
+            icon: Icon(Icons.search),
+            onPressed: () {
+              setState(() {
+                this.isSearching = true;
+              });
+            },
+          )
+        ],
       ),
-      body:FutureBuilder(
-                future: _empApiDataState().getApiData(),
-                builder: (BuildContext context,AsyncSnapshot snapshot){
-                  if (snapshot.connectionState == ConnectionState.done) {
-                    return SingleChildScrollView(
-                        child: Column(
-                          mainAxisAlignment: MainAxisAlignment.start,
-                          children: ApiData.list,
-                        ),
-                    );
-                  }
-                    else {
-                      return Center(child: CircularProgressIndicator());
-                  }
+      body: Container(
+        padding: EdgeInsets.all(10),
+        child: name_avenger.length > 0
+            ? ListView.builder(
+            itemCount: name_avenger.length,
+            itemBuilder: (BuildContext context, int index) {
+              return GestureDetector(
+                onTap: () {
+                  Navigator.of(context).pushNamed(EmpInfo.routeName,
+                      arguments: name_avenger[index]);
                 },
-              )
+                child: Card(
+                  color: Colors.black12,
+                  child: Padding(
+                    padding: const EdgeInsets.symmetric(
+                        vertical: 10, horizontal: 8),
+                    child: Text(
+                      name_avenger[index]['name'],
+                      style: TextStyle(fontSize: 18),
+                    ),
+                  ),
+                ),
+              );
+            })
+            : Center(
+          child: CircularProgressIndicator(),
+        ),
+      ),
     );
   }
 }
-
-class ApiData{
-  static final List<Widget> list = [];
-}
-

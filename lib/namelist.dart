@@ -1,8 +1,5 @@
 import 'package:flutter/material.dart';
-
-import 'customappbar.dart';
 import 'customcardlist.dart';
-import 'customdrawer.dart';
 
 class AddToList extends StatefulWidget {
   const AddToList({Key? key}) : super(key: key);
@@ -21,7 +18,7 @@ class _AddToListState extends State<AddToList> {
 
   void  addemp(name, id) {
     setState(() {
-      Data.list.add(CustomCard(name: name,realname: id));
+      Data.list.add(CustomCard(name: name,realname: id,listlen: Data.list.length,));
     });
   }
 

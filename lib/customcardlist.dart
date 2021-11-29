@@ -1,17 +1,17 @@
 import 'package:flutter/material.dart';
-
-import 'namelist.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 
 class CustomCard extends StatelessWidget {
-  const CustomCard({Key? key, required this.name, required this.realname}) : super(key: key);
+  const CustomCard({Key? key, required this.name, required this.realname, required this.listlen}) : super(key: key);
   final String name;
   final String realname;
+  final int listlen;
 
   Color alternateColor(){
-    if(Data.list.length==0){
-      return Colors.green;
+    if(listlen==0){
+      return Colors.red;
     }
-    if(Data.list.length%2 ==0 ){
+    if(listlen%2 ==0 ){
       return Colors.red;
     }else{
       return Colors.green;
@@ -20,22 +20,31 @@ class CustomCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-  return Container(
-      color: alternateColor(),
-        child: Column(
-          children: [
-            Container(
-              child: ListTile(
-                title: Text("heroname: " + name),
-                subtitle: Row(
-                  children: [
-                    Text("realname: " + realname),
-                  ],
+  return InkWell(
+    onTap: (){
+      Fluttertoast.showToast(
+        msg: "selected",
+        toastLength: Toast.LENGTH_SHORT,
+        gravity: ToastGravity.CENTER,
+      );
+    },
+    child: Container(
+        color: alternateColor(),
+          child: Column(
+            children: [
+              Container(
+                child: ListTile(
+                  title: Text("heroname: " + name),
+                  subtitle: Row(
+                    children: [
+                      Text("realname: " + realname),
+                    ],
+                  ),
                 ),
               ),
-            ),
-          ],
+            ],
+          ),
         ),
-      );
+  );
   }
 }

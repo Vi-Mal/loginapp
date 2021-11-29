@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:loginapp/empinfo.dart';
 import 'package:loginapp/splashscreen.dart';
 
 void main() {
@@ -10,9 +11,12 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return const MaterialApp(
+    return  MaterialApp(
       debugShowCheckedModeBanner: false,
       home: SplashHome(),
+      routes: {
+        EmpInfo.routeName: (ctx) => EmpInfo(),
+      },
     );
   }
 }
