@@ -1,5 +1,6 @@
 import 'dart:convert';
 
+import 'package:flutter/rendering.dart';
 import 'package:http/http.dart' as http;import 'package:flutter/material.dart';
 
 import 'empinfo.dart';
@@ -36,6 +37,15 @@ class _avengersApiState extends State<avengersApi> {
           country['name'].toLowerCase().contains(value.toLowerCase()))
           .toList();
     });
+  }
+  
+  Widget buildDivider() {
+    return Divider(
+      height: 0.0,
+      color: Colors.black38,
+      indent: 95.0,
+      endIndent: 10.0,
+    );
   }
 
   @override
@@ -85,21 +95,26 @@ class _avengersApiState extends State<avengersApi> {
             ? ListView.builder(
             itemCount: name_avenger.length,
             itemBuilder: (BuildContext context, int index) {
-              return GestureDetector(
+              return InkWell(
                 onTap: () {
                   Navigator.of(context).pushNamed(EmpInfo.routeName,
                       arguments: name_avenger[index]);
                 },
                 child: Card(
-                  color: Colors.black12,
                   child: Padding(
-                    padding: const EdgeInsets.symmetric(
-                        vertical: 10, horizontal: 8),
-                    child: Text(
-                      name_avenger[index]['name'],
-                      style: TextStyle(fontSize: 18),
+                    padding: EdgeInsets.fromLTRB(0, 20, 0, 20),
+                    child:ListTile(
+                              leading: CircleAvatar(
+                                radius: 30,
+                                backgroundImage: NetworkImage(name_avenger[index]['imageurl']),
+                              ),
+                              title: Text(
+                              name_avenger[index]['name'],
+                              style: TextStyle(fontSize: 18),
+                            ),
+                        trailing: Icon(Icons.keyboard_arrow_right),
+                      ),
                     ),
-                  ),
                 ),
               );
             })
