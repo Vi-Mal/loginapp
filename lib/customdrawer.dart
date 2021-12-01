@@ -4,6 +4,7 @@ import 'package:loginapp/namelist.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'displayDBdata.dart';
 import 'empapidata.dart';
+import 'getempdata.dart';
 import 'loginscreen.dart';
 
 class CustomDrawer extends StatelessWidget {
@@ -61,7 +62,7 @@ class CustomDrawer extends StatelessWidget {
                       Navigator.push<void>(
                       context,
                       MaterialPageRoute<void>(
-                      builder: (BuildContext context) =>  displatDBdata(),
+                      builder: (BuildContext context) =>  getemployees(),
                       ),
                       );
                     }

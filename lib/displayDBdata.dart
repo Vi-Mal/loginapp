@@ -11,11 +11,10 @@ class displatDBdata extends StatefulWidget {
 
 class _displatDBdataState extends State<displatDBdata> {
 
-  var db = new Mysql();
   var mail= 'empty';
 
   void _getCustomer() {
-    db.getConnection().then((conn) {
+    Mysql().getConnection().then((conn) {
       String sql = 'SELECT user_mail FROM user_info.user_login';
       conn.query(sql).then((results) {
         for(var row in results){
@@ -37,7 +36,7 @@ class _displatDBdataState extends State<displatDBdata> {
           mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
             Text(
-              'mail: $mail',
+              mail,
             ),
           ],
         ),
