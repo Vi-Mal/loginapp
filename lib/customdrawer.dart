@@ -2,6 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:loginapp/namelist.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'displayDBdata.dart';
 import 'empapidata.dart';
 import 'loginscreen.dart';
 
@@ -48,6 +49,19 @@ class CustomDrawer extends StatelessWidget {
                       context,
                       MaterialPageRoute<void>(
                       builder: (BuildContext context) =>  AddToList(),
+                      ),
+                      );
+                    }
+                  ),
+                  buildMenuItem(
+                    text: 'DB',
+                    icon: Icons.eleven_mp,
+                    onClicked: () {
+                      selectedItem(context, 1);
+                      Navigator.push<void>(
+                      context,
+                      MaterialPageRoute<void>(
+                      builder: (BuildContext context) =>  displatDBdata(),
                       ),
                       );
                     }
