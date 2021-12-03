@@ -1,12 +1,11 @@
 import 'dart:convert';
+import 'dart:js';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:http/http.dart' as http;
-import 'package:loginapp/registeremployee.dart';
-import 'DeleteEmployee.dart';
+import 'package:loginapp/employeedrawer.dart';
+import 'package:loginapp/updateemployee.dart';
 import 'EmployeeModel.dart';
-import 'updateemployee.dart';
 
 class getemployees extends StatefulWidget {
   @override
@@ -16,21 +15,14 @@ class getemployees extends StatefulWidget {
 }
 
 class getAllEmployeesState extends State<getemployees> {
-  List<EmployeeModel> employee = [];
-  var xy ;
-
 
   Future<List<EmployeeModel>> getEmployees() async {
-
     var data = await http.get(Uri.parse('http://localhost:8080/getallemployees'));
-    var jsonData = jsonDecode(data.body);
-    xy =jsonData;
+    var jsonData = json.decode(data.body);
 
-
-
-    employee = [];
+    List<EmployeeModel> employee = [];
     for (var e in jsonData) {
-      EmployeeModel employees = new EmployeeModel(firstName: e["firstName"] , lastName: e["lastName"], id: e["id"]);
+      EmployeeModel employees = new EmployeeModel(id: e["id"], lastName: e["lastName"], firstName: e["firstName"]);
       employee.add(employees);
     }
     return employee;
@@ -38,12 +30,7 @@ class getAllEmployeesState extends State<getemployees> {
 
   @override
   Widget build(BuildContext context) {
-    print(xy);
-    return Scaffold(
-      appBar:  AppBar(
-        title:  Text("All Employees Details"),
-      ),
-      body: Container(
+    return Container(
         child: FutureBuilder(
           future: getEmployees(),
           builder: (BuildContext context, AsyncSnapshot snapshot) {
@@ -54,9 +41,22 @@ class getAllEmployeesState extends State<getemployees> {
                 itemCount: snapshot.data.length,
                 itemBuilder: (BuildContext context, int index) {
                   return ListTile(
-                    title: Text('${snapshot.data[index].id}       ' +
-                        '${snapshot.data[index].firstName}       ' +
-                        '${snapshot.data[index].lastName}'),
+                    title: Container(
+                      child: Column(
+                        children: [
+                          Container(
+                            child: ListTile(
+                              title: Text("firstname: " + snapshot.data[index].firstName),
+                              subtitle: Row(
+                                children: [
+                                  Text("lastname: " + snapshot.data[index].lastName),
+                                ],
+                              ),
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
                     onTap: () {
                       Navigator.push(
                           context,
@@ -68,13 +68,6 @@ class getAllEmployeesState extends State<getemployees> {
                 });
           },
         ),
-      ),
-      floatingActionButton: FloatingActionButton(onPressed: () {
-        Navigator.push(context,
-            MaterialPageRoute(builder: (context) => registerEmployee()));
-      },child: Icon(Icons.ten_k),
-
-      ),
     );
   }
 }
@@ -112,24 +105,47 @@ class DetailPage extends StatelessWidget {
               })
         ],
       ),
-      body: Container(
-        child: Text('FirstName' +
-            ' ' +
-            employee.firstName +
-            ' ' +
-            'LastName' +
-            employee.lastName),
-      ),
+      body: Container(),
+      // Center(
+      //   child: Container(
+      //     child: Column(
+      //       crossAxisAlignment: CrossAxisAlignment.center,
+      //       children:[
+      //         Text('FirstName:  ' +
+      //             employee.firstName ),
+      //             Text(
+      //             'LastName:  ' +
+      //             employee.lastName),
+      //       ]
+      //     ),
+      //   ),
+      // ),
       floatingActionButton: FloatingActionButton(
         onPressed: () {
+
           deleteEmployee1(employee);
-          Navigator.push(context,
-              MaterialPageRoute(builder: (context) => deleteEmployee()));
+          Navigator.pushReplacement(
+              context,
+              MaterialPageRoute(
+                  builder: (context) => employeeDrawer()));
+          showDialog(
+          context: context,
+          barrierDismissible: true,
+          builder: (BuildContext dialogContext) {
+          return MyAlertDialog(
+          title: 'deleted',
+            actions: <Widget>[
+              TextButton(
+                child: const Text('done'),
+                onPressed: () {
+            },
+              ),
+            ], content: 'deleted item',
+          );
+          });
         },
         child: Icon(Icons.delete),
-        backgroundColor: Colors.pink,
       ),
     );
   }
-
 }

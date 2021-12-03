@@ -1,5 +1,4 @@
 import 'dart:convert';
-
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
@@ -13,9 +12,9 @@ class registerEmployee extends StatefulWidget {
   }
 }
 
-registerEmployees(
+Future registerEmployees(
     String firstName, String lastName, BuildContext context) async {
-  var Url = 'http://localhost:8080/addemployee';
+  var Url = "http://localhost:8080/addemployee";
   var response = await http.post(Uri.parse(Url),
       headers: <String, String>{"Content-Type": "application/json"},
       body: jsonEncode(<String, String>{
@@ -58,6 +57,8 @@ class registerEmployeeState extends State<registerEmployee> {
                   padding: EdgeInsets.only(
                       top: minimumPadding, bottom: minimumPadding),
                   child: TextFormField(
+                    controller: firstController,
+
                     decoration: InputDecoration(
                         labelText: 'First Name',
                         hintText: 'Enter Your First Name',
@@ -68,6 +69,8 @@ class registerEmployeeState extends State<registerEmployee> {
                   padding: EdgeInsets.only(
                       top: minimumPadding, bottom: minimumPadding),
                   child: TextFormField(
+                    controller: lastController,
+
                     decoration: InputDecoration(
                         labelText: 'Last Name',
                         hintText: 'Enter Your First Name',

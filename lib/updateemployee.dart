@@ -1,9 +1,9 @@
 import 'dart:convert';
-
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 
 import 'EmployeeModel.dart';
+import 'employeedrawer.dart';
 
 class updateEmployee extends StatefulWidget {
   EmployeeModel employee;
@@ -16,7 +16,7 @@ class updateEmployee extends StatefulWidget {
   updateEmployee(this.employee);
 }
 
- updateEmployees(
+Future updateEmployees(
     EmployeeModel employee, BuildContext context) async {
   var Url = "http://localhost:8080/updateemployee";
   var response = await http.put(Uri.parse(Url),
@@ -53,6 +53,14 @@ class updateEmployeeState extends State<updateEmployee> {
   Widget build(BuildContext context) {
     return Scaffold(
         appBar: AppBar(
+          title: Text('Update Employee'),
+          leading: IconButton(
+            icon: Icon(Icons.arrow_back),
+            onPressed: () {
+              Navigator.push(context,
+                  MaterialPageRoute(builder: (context) => employeeDrawer()));
+            },
+          ),
         ),
         body: Container(
             child: Padding(
@@ -97,7 +105,7 @@ class updateEmployeeState extends State<updateEmployee> {
                       onPressed: () async {
                         String firstName = firstController.text;
                         String lastName = lastController.text;
-                        EmployeeModel emp = new EmployeeModel(firstName: firstController.text, id: employee.id, lastName: lastController.text);
+                        EmployeeModel emp = new EmployeeModel(lastName: lastController.text, id: employee.id, firstName: firstController.text);
                         EmployeeModel employees =
                         await updateEmployees(emp, context);
                         setState(() {

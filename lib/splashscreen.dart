@@ -31,7 +31,7 @@ class _SplashHome extends State<SplashHome> {
           builder: (BuildContext context) => MyHomePage()));
     } else {
       Navigator.of(context).pushReplacement(MaterialPageRoute(
-          builder: (BuildContext context) => LoginPage()));    }
+          builder: (BuildContext context) => MyHomePage()));    }
   }
 
   @override
